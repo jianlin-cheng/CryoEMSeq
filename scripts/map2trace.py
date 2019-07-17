@@ -1,15 +1,21 @@
 #!/usr/bin/env python
-docstring='''
+'''
 Split Ca trace into fragment, and map sequence to each fragment 
 
-usage: python rmap2trace.py <thre> <fasta_file> <Ca_trace.pdb> <out_dir>
-example:
-    python map2trace.py 50 /storage/htc/bdm/tianqi/CryoEM/paper_revised/FrhA/FrhA.fasta /storage/htc/bdm/tianqi/CryoEM/paper_revised/FrhA/FrhA.pdb /storage/htc/bdm/tianqi/CryoEM/paper_revised/FrhA/frag
 '''
 
 import os,sys
 import numpy as np
 
+aa_3to1 = {'CYS': 'C', 'ASP': 'D', 'SER': 'S', 'GLN': 'Q', 'LYS': 'K',
+    'ILE': 'I', 'PRO': 'P', 'THR': 'T', 'PHE': 'F', 'ASN': 'N', 
+     'GLY': 'G', 'HIS': 'H', 'LEU': 'L', 'ARG': 'R', 'TRP': 'W', 
+     'ALA': 'A', 'VAL':'V', 'GLU': 'E', 'TYR': 'Y', 'MET': 'M'}
+
+aa_1to3 = {'C':'CYS', 'D':'ASP', 'S':'SER', 'Q':'GLN', 'K':'LYS',
+    'I':'ILE', 'P':'PRO', 'T':'THR', 'F':'PHE' , 'N':'ASN', 
+     'G':'GLY', 'H':'HIS', 'L':'LEU', 'R':'ARG', 'W':'TRP', 
+     'A':'ALA', 'V':'VAL', 'E':'GLU', 'Y':'TYR', 'M':'MET'}
 
 def get_seq(fasta):
     for line in open(fasta, "r"):
@@ -44,7 +50,7 @@ def trace2frag(trace,frag_dir):
             #print("frag"+str(i-1)+":"+str(j))
     return len_frag
 
-def frag_filt(len_frag,thre):
+def frag_filt(len_frag,thre,frag_dir):
     len_frag_filt = dict()
     for key, value in len_frag.items():
         if value < int(thre):
@@ -89,65 +95,3 @@ def map2frag(seq,len_frag_filt,frag_dir):
         os.chdir(frag_dir+"/frag"+str(key))
         for i in range(0,L-value+1):
             single_map(seq[i:i+value], frag_dir+"/frag"+str(key)+".pdb",frag_dir+"/frag"+str(key)+"/frag"+str(key)+"_"+str(i+1)+".pdb")
-
-if __name__=="__main__":
-
-    if len(sys.argv) != 5:
-        print('please input the right parameters')
-        print("Usage: python rmap2trace.py <thre> <fasta_file> <Ca_trace.pdb> <out_dir>")
-        sys.exit(1)
-
-    thre = sys.argv[1] #50 filter fragment that has length < thre
-    fasta = sys.argv[2] #/storage/htc/bdm/tianqi/CryoEM/paper_revised/TMV/TMV.fasta
-    trace = sys.argv[3] #/storage/htc/bdm/tianqi/CryoEM/paper_revised/TMV/TMV.pdb
-    frag_dir = sys.argv[4] #/storage/htc/bdm/tianqi/CryoEM/paper_revised/TMV/frag
-
-    fasta = os.path.abspath(fasta)
-    trace = os.path.abspath(trace)
-    frag_dir = os.path.abspath(frag_dir)
-    script_path = os.path.dirname(os.path.realpath(__file__))
-
-    main_folder = os.path.abspath(os.path.join(frag_dir, os.pardir))
-    if not os.path.exists(main_folder+"/result"):
-        os.system("mkdir "+main_folder+"/result")
-
-    aa_3to1 = {'CYS': 'C', 'ASP': 'D', 'SER': 'S', 'GLN': 'Q', 'LYS': 'K',
-        'ILE': 'I', 'PRO': 'P', 'THR': 'T', 'PHE': 'F', 'ASN': 'N', 
-         'GLY': 'G', 'HIS': 'H', 'LEU': 'L', 'ARG': 'R', 'TRP': 'W', 
-         'ALA': 'A', 'VAL':'V', 'GLU': 'E', 'TYR': 'Y', 'MET': 'M'}
-
-    aa_1to3 = {'C':'CYS', 'D':'ASP', 'S':'SER', 'Q':'GLN', 'K':'LYS',
-        'I':'ILE', 'P':'PRO', 'T':'THR', 'F':'PHE' , 'N':'ASN', 
-         'G':'GLY', 'H':'HIS', 'L':'LEU', 'R':'ARG', 'W':'TRP', 
-         'A':'ALA', 'V':'VAL', 'E':'GLU', 'Y':'TYR', 'M':'MET'}
-
-    if not os.path.exists(fasta):
-        print("Usage: python map2trace.py <thre> <fasta_file> <Ca_trace.pdb> <out_dir>")
-        print("Cannot find full-length fasta file:"+fasta)
-        sys.exit(1)
-
-    if not os.path.exists(fasta):
-        print("Usage: python map2trace.py <thre> <fasta_file> <Ca_trace.pdb> <out_dir>")
-        print("Cannot find full-length fasta file:"+fasta)
-        sys.exit(1)
-
-    if not os.path.isdir(frag_dir):
-        print("Usage: python map2trace.py <thre> <fasta_file> <Ca_trace.pdb> <out_dir>")
-        print("The output folder path: doesn't exist, Creating..."+frag_dir)
-        os.system("mkdir -p "+frag_dir)
-
-    #### Step 1. Map full-length sequence into Ca trace
-    seq = get_seq(fasta)
-    L = len(seq)
-    print(fasta+" Length:"+str(L))
-
-    #####save L.txt to result folder#####
-    len_frag = trace2frag(trace,frag_dir)
-    len_frag_filt = frag_filt(len_frag,thre)
-    f = open(main_folder+"/result/"+"L.txt","w")
-    for key, value in len_frag_filt.items():
-        f.write("frag"+str(key)+" length "+str(value)+"\n")
-        print("frag"+str(key)+" length "+str(value))
-    f.close()
-    map2frag(seq,len_frag_filt,frag_dir)
-    print("L.txt is saved in the "+main_folder+"/result.....")
