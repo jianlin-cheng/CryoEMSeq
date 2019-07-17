@@ -59,8 +59,8 @@ def frag_filt(len_frag,thre,frag_dir):
             len_frag_filt[key] = value
             if not os.path.isdir(frag_dir+"/frag"+str(key)):
                 os.system("mkdir "+frag_dir+"/frag"+str(key))
-            else:
-                os.system("rm -rf "+frag_dir+"/frag"+str(key)+"/*")
+            #else:
+                #os.system("rm -rf "+frag_dir+"/frag"+str(key)+"/*")
     return len_frag_filt
 
 def single_map(seq,frag_trace,map_pdb):

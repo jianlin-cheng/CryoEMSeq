@@ -24,7 +24,7 @@ def range_overlap(x, y):
     if x.start == x.stop or y.start == y.stop:
         return False
     return ((x.start < y.stop  and x.stop > y.start) or
-            (x.stop  > y.start and y.stop > x.start))
+            (x.stop  > y.start and y.stop > x.start) or (x.stop==y.start) or (x.start == y.stop))
 
 def best_overlap(smin,smax,best):
     x = range(smin,smax)

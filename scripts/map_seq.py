@@ -40,6 +40,11 @@ if __name__=="__main__":
     if not os.path.exists(main_folder+"/result"):
         os.system("mkdir -p "+main_folder+"/result")
 
+    if not os.path.exists(main_folder+"/best_model"):
+        os.system("mkdir -p "+main_folder+"/best_model")
+    else:
+        os.system("rm -rf "+main_folder+"/best_model/*")
+
     if not os.path.exists(fasta):
         print("Usage: python map2trace.py <thre> <fasta_file> <Ca_trace.pdb> <out_dir>")
         print("Cannot find full-length fasta file:"+fasta)
@@ -118,21 +123,25 @@ if __name__=="__main__":
         smin = int(arr[1])
         smax = int(arr[1])+value-1
         while(best_overlap(smin,smax,best)):
+            if i+1 >= len(frag_sorted):
+                break
             max_frag_next = frag_sorted[i+1]
             max_frag = max_frag_next[0]
             arr = max_frag.split('_')
             smin = int(arr[1])
             smax = int(arr[1])+value-1
             i = i+1
-        best.append(range(smin,smax))
-        print(arr[0]+":"+str(smin)+"-"+str(smax))
-        if not os.path.exists(main_folder+"/best_model"):
-            os.system("mkdir -p "+main_folder+"/best_model")
-        os.system("cp "+main_folder+"/frag/"+arr[0]+"/"+arr[0]+"_"+str(smin)+"_qprob/models/"+arr[0]+"_"+str(smin)+".rebuilt.scwrl.pdb "+main_folder+"/best_model")
+        if i+1 < len(frag_sorted):
+            best.append(range(smin,smax))
+            print(arr[0]+":"+str(smin)+"-"+str(smax))
+            os.system("cp "+main_folder+"/frag/"+arr[0]+"/"+arr[0]+"_"+str(smin)+"_qprob/models/"+arr[0]+"_"+str(smin)+".rebuilt.scwrl.pdb "+main_folder+"/best_model")
+        else:
+            print(arr[0]+" cannot find sequence")
+        i = 0
         frag = dict()
 
     ######Reindex best mathching model for each fragment in Ca trace#####
     reindex_pdb(main_folder+"/best_model",script_path)
     print("Step3: Select best model based on Qprob score finished...")
-    sys.stdout.write('\ndone.')
+    sys.stdout.write('\ndone.\n')
 
