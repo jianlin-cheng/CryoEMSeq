@@ -1,4 +1,8 @@
 CryoEMSeq:Sequence mapping to Ca trace
+
+Prerequisites
+Python3 with numpy should be installed
+
 step1: Map sequence to Ca trace fragments
 step2: Run Qprob on each Ca fragment
 step3: Select best model based on Qprob score
