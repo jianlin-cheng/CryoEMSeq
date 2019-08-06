@@ -9,7 +9,7 @@ step3: Select best model based on Qprob score
 
 usage: python map_seq.py <thre> <fasta_file> <Ca_trace.pdb> <out_dir>
 example:
-    python map_seq.py 50TRPV1.fasta TRPV1.pdb TRPV1
+    python map_seq.py 50 TRPV1.fasta TRPV1.pdb TRPV1
 
 thre : length of fragments >= thre in the Ca trace will be mapped sequence
 fasta_file : input full length true sequence
