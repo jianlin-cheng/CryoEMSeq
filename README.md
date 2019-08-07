@@ -2,7 +2,7 @@
 The program of mapping protein sequences into protein Ca trace drives from cryoEM image data
 
 
-**(1) Download DeepDist package (short path is recommended)**
+**(1) Download CryoEMSeq package (short path is recommended)**
 
 ```
 git clone https://github.com/jianlin-cheng/CryoEMSeq.git
