@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
- use Cwd;
- use Cwd 'abs_path';
+use Cwd 'abs_path';
+use File::Basename;
 # /storage/htc/bdm/Collaboration/jh7x3/frag/scripts/P2_run_qprob_on_pdb_batch.pl /storage/htc/bdm/Collaboration/jh7x3/frag/result/frag1/  /storage/htc/bdm/Collaboration/jh7x3/frag/tools/ /storage/htc/bdm/Collaboration/jh7x3/frag/result/frag1.dfire_summary
 
 
@@ -12,12 +12,12 @@ if($numArgs != 3)
 	exit(1);
 }
 
-$pdb_dir		= abs_path($ARGV[0]);  # 
+$pdb_dir	= abs_path($ARGV[0]);  # 
 $tool_dir	= "$ARGV[1]"; #/storage/htc/bdm/Collaboration/jh7x3/frag/tools
 $scoreout	= "$ARGV[2]"; #
 
 $script_dir = abs_path(dirname($0));
-$pulchar_program = "$tool_dir/pulchra_306/pulchra";
+$pulchar_program = "$tool_dir/pulchra304/pulchra";
 $scwrl4_program = "$tool_dir/scwrl4/Scwrl4";
 
 
