@@ -1,0 +1,2 @@
+frag1 length 46
+frag2 length 282
