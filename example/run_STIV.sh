@@ -14,17 +14,14 @@
 
 module load python/python-3.5.2
 
-outputdir=/storage/hpc/data/wuti/test/CryoEMSeq/test/STIV_out
+outputdir=/data/jh7x3/CryoEMSeq/test/STIV_out
 
-source /storage/hpc/data/wuti/test/CryoEMSeq/tools/python3_virtualenv/bin/activate
+mkdir -p /data/jh7x3/CryoEMSeq/test/STIV_out
 
-printf "python /storage/hpc/data/wuti/test/CryoEMSeq/scripts/CryoEMSeq.py 40 /storage/hpc/data/wuti/test/CryoEMSeq/example/STIV/STIV.fasta /storage/hpc/data/wuti/test/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV\n\n"
+cd /data/jh7x3/CryoEMSeq/test/STIV_out
 
-python /storage/hpc/data/wuti/test/CryoEMSeq/scripts/CryoEMSeq.py 40 /storage/hpc/data/wuti/test/CryoEMSeq/example/STIV/STIV.fasta /storage/hpc/data/wuti/test/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV
+source /data/jh7x3/CryoEMSeq/tools/python3_virtualenv/bin/activate
 
+printf "python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 40 /data/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /data/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV\n\n"
 
-
-
-
-
-
+python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 40 /data/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /data/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV

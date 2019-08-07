@@ -16,6 +16,10 @@ module load python/python-3.5.2
 
 outputdir=SOFTWARE_PATH/test/STIV_out
 
+mkdir -p SOFTWARE_PATH/test/STIV_out
+
+cd SOFTWARE_PATH/test/STIV_out
+
 source SOFTWARE_PATH/tools/python3_virtualenv/bin/activate
 
 printf "python SOFTWARE_PATH/scripts/CryoEMSeq.py 40 SOFTWARE_PATH/example/STIV/STIV.fasta SOFTWARE_PATH/example/STIV/STIV_Ca_Trace.pdb STIV\n\n"
