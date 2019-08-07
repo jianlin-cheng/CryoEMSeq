@@ -12,7 +12,7 @@ if($numArgs != 4)
 }
 
 $pdb_dir	= abs_path($ARGV[0]);  # 
-$tool_dir	= "$ARGV[1]"; #/storage/htc/bdm/Collaboration/jh7x3/frag/tools
+$tool_dir	= "$ARGV[1]"; #
 $scoreout	= "$ARGV[2]"; #
 $proc_num 	= "$ARGV[3]"; #
 

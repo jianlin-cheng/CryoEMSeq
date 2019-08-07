@@ -21,7 +21,7 @@ from rank_seq import *
 
 if __name__=="__main__":
 
-    if len(sys.argv) != 5:
+    if len(sys.argv) != 6:
         sys.stderr.write(docstring)
         exit()
 
@@ -29,6 +29,7 @@ if __name__=="__main__":
     fasta = sys.argv[2] #/storage/htc/bdm/tianqi/CryoEM/paper_revised/TMV/TMV.fasta
     trace = sys.argv[3] #/storage/htc/bdm/tianqi/CryoEM/paper_revised/TMV/TMV.pdb
     main_folder = sys.argv[4] #/storage/htc/bdm/tianqi/CryoEM/paper_revised/TMV/frag
+    cpus_num = sys.argv[5] #10
 
     fasta = os.path.abspath(fasta)
     trace = os.path.abspath(trace)
@@ -83,8 +84,8 @@ if __name__=="__main__":
     #### Step 2. Run Qprob on each Ca fragment
     for key, value in len_frag_filt.items():
         if not os.path.exists(main_folder+"/result/frag"+str(key)+".txt"):
-            print("perl " + script_path+"/P2_run_qprob_on_fragments_parallel.pl "+frag_dir+"/frag"+str(key)+" "+tools_dir+" "+main_folder+"/result/frag"+str(key)+".txt" + " 10")
-            os.system("perl " + script_path+"/P2_run_qprob_on_fragments_parallel.pl "+frag_dir+"/frag"+str(key)+" "+tools_dir+" "+main_folder+"/result/frag"+str(key)+".txt" + " 10")
+            print("perl " + script_path+"/P2_run_qprob_on_fragments_parallel.pl "+frag_dir+"/frag"+str(key)+" "+tools_dir+" "+main_folder+"/result/frag"+str(key)+".txt" + " "+ str(cpus_num))
+            os.system("perl " + script_path+"/P2_run_qprob_on_fragments_parallel.pl "+frag_dir+"/frag"+str(key)+" "+tools_dir+" "+main_folder+"/result/frag"+str(key)+".txt" + " "+ str(cpus_num))
             if os.path.exists(main_folder+"/result/frag"+str(key)+".txt"):
                 print("Step 2 Run Qprob on each Ca fragment "+str(key)+" finished ....")
             else:
