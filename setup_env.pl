@@ -133,7 +133,7 @@ foreach $tool (@basic_tools)
 	}
 }
 
-$tooldir = $CryoEMSeq_db_tools_dir.'/tools/qprob_package/';
+$tooldir = $CryoEMSeq_db_tools_dir.'/qprob_package';
 if(-d $tooldir)
 {
 	print "\n\n#########  Setting up qprob_package/\n";
@@ -150,7 +150,7 @@ if(-d $tooldir)
 	}
 }
 
-$addr_scwrl4 = $CryoEMSeq_db_tools_dir."/tools/scwrl4";
+$addr_scwrl4 = $CryoEMSeq_db_tools_dir."/scwrl4";
 if(-d $addr_scwrl4)
 {
 	print "\n#########  Setting up scwrl4 \n";

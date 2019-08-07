@@ -14,7 +14,7 @@
 
 module load python/python-3.5.2
 
-outputdir=/home/jh7x3/CryoEMSeq/test/TRPV1_out
+outputdir=/data/jh7x3/CryoEMSeq/test/TRPV1_out
 
 printf "Output directory: $outputdir\n\n"
 
@@ -29,9 +29,9 @@ mkdir -p $outputdir/
 cd $outputdir
 
 
-printf "python /home/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.fasta /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1_Ca_Trace.pdb TRPV1\n\n"
+printf "python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /data/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.fasta /data/jh7x3/CryoEMSeq/example/TRPV1/TRPV1_Ca_Trace.pdb TRPV1\n\n"
 
-python /home/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.fasta /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1_Ca_Trace.pdb TRPV1
+python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /data/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.fasta /data/jh7x3/CryoEMSeq/example/TRPV1/TRPV1_Ca_Trace.pdb TRPV1
 
 
 
