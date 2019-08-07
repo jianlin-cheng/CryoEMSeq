@@ -72,11 +72,31 @@ if(!-d $tools_dir)
 
 
 
-#### (1) Download basic tools
-print("\n#### (1) Download basic tools\n\n");
+
+print "#########  (1) Configuring option files\n";
+
+$option_list = "$install_dir/installation/configure_list";
+
+if (! -f $option_list)
+{
+        die "\nOption file $option_list not exists.\n";
+}
+configure_file2($option_list,'bin');
+configure_file2($option_list,'example');
+
+print "#########  Configuring option files, done\n\n\n";
+
+system("chmod +x $install_dir/bin/*.sh");
+system("chmod +x $install_dir/example/*.sh");
+
+
+
+
+#### (2) Download basic tools
+print("\n#### (2) Download basic tools\n\n");
 
 chdir($tools_dir);
-$basic_tools_list = "scwrl4.tar.gz;TMscore.tar.gz;pulchra304.tar.gz";
+$basic_tools_list = "scwrl4.tar.gz;TMscore.tar.gz;pulchra_306.tar.gz;qprob_package.tar.gz";
 @basic_tools = split(';',$basic_tools_list);
 foreach $tool (@basic_tools)
 {
@@ -113,7 +133,7 @@ foreach $tool (@basic_tools)
 	}
 }
 
-$tooldir = $CryoEMSeq_db_tools_dir.'/tools/qprob_package/';
+$tooldir = $CryoEMSeq_db_tools_dir.'/qprob_package';
 if(-d $tooldir)
 {
 	print "\n\n#########  Setting up qprob_package/\n";
@@ -130,7 +150,7 @@ if(-d $tooldir)
 	}
 }
 
-$addr_scwrl4 = $CryoEMSeq_db_tools_dir."/tools/scwrl4";
+$addr_scwrl4 = $CryoEMSeq_db_tools_dir."/scwrl4";
 if(-d $addr_scwrl4)
 {
 	print "\n#########  Setting up scwrl4 \n";
@@ -159,6 +179,27 @@ if(-d $addr_scwrl4)
 	print "Done\n";
 }
 
+
+
+#### create python virtual environment on multicom server
+
+open(OUT,">$install_dir/installation/P1_setup_python3.sh") || die "Failed to open file $install_dir/installation/P1_setup_python3.sh\n";
+print OUT "#!/bin/bash -e\n\n";
+print OUT "scl enable rh-python36 bash\n\n";
+close OUT;
+
+
+open(OUT,">$install_dir/installation/P2_python3_virtual.sh") || die "Failed to open file $install_dir/installation/P2_python3_virtual.sh\n";
+print OUT "#!/bin/bash -e\n\n";
+print OUT "echo \" Start install python3 virtual environment (will take ~1 min)\"\n\n";
+print OUT "cd $install_dir/tools\n\n";
+print OUT "rm -rf python3_virtualenv\n\n";
+print OUT "pyvenv python3_virtualenv\n\n";
+print OUT "source $install_dir/tools/python3_virtualenv/bin/activate\n\n";
+print OUT "pip install --upgrade pip\n\n";
+print OUT "pip install numpy\n\n";
+print OUT "echo \"installed\" > $install_dir/tools/python3_virtualenv/install.done\n\n";
+close OUT;
 
 
 print "\n\n";

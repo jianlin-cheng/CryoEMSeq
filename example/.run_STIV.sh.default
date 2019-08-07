@@ -21,9 +21,3 @@ source SOFTWARE_PATH/tools/python3_virtualenv/bin/activate
 printf "python SOFTWARE_PATH/scripts/CryoEMSeq.py 40 SOFTWARE_PATH/example/STIV/STIV.fasta SOFTWARE_PATH/example/STIV/STIV_Ca_Trace.pdb STIV\n\n"
 
 python SOFTWARE_PATH/scripts/CryoEMSeq.py 40 SOFTWARE_PATH/example/STIV/STIV.fasta SOFTWARE_PATH/example/STIV/STIV_Ca_Trace.pdb STIV
-
-
-
-
-
-

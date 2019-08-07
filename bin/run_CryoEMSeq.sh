@@ -25,11 +25,8 @@ Ca_trace_file=$2
 threshold=$3
 outputdir=$4
 
-
 source /storage/hpc/data/wuti/test/CryoEMSeq/tools/python3_virtualenv/bin/activate
 
 printf "python /storage/hpc/data/wuti/test/CryoEMSeq/scripts/CryoEMSeq.py $threshold $fasta_file $Ca_trace_file $outputdir\n\n"
 
 python /storage/hpc/data/wuti/test/CryoEMSeq/scripts/CryoEMSeq.py $threshold $fasta_file $Ca_trace_file $outputdir
-
-
