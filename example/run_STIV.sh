@@ -2,8 +2,8 @@
 #--------------------------------------------------------------------------------
 #  SBATCH CONFIG
 #--------------------------------------------------------------------------------
-#SBATCH -J  TRPV1
-#SBATCH -o TRPV1-%j.out
+#SBATCH -J  STIV
+#SBATCH -o STIV-%j.out
 #SBATCH --partition Lewis,hpc5,hpc4
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -14,7 +14,7 @@
 
 module load python/python-3.5.2
 
-outputdir=/data/jh7x3/CryoEMSeq/test/TRPV1_out
+outputdir=/data/jh7x3/CryoEMSeq/test/STIV_out
 
 printf "Output directory: $outputdir\n\n"
 
@@ -29,9 +29,9 @@ mkdir -p $outputdir/
 cd $outputdir
 
 
-printf "python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /data/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.fasta /data/jh7x3/CryoEMSeq/example/TRPV1/TRPV1_Ca_Trace.pdb TRPV1\n\n"
+printf "python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /data/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /data/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV\n\n"
 
-python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /data/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.fasta /data/jh7x3/CryoEMSeq/example/TRPV1/TRPV1_Ca_Trace.pdb TRPV1
+python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /data/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /data/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV
 
 
 
