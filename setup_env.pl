@@ -72,8 +72,28 @@ if(!-d $tools_dir)
 
 
 
-#### (1) Download basic tools
-print("\n#### (1) Download basic tools\n\n");
+
+print "#########  (1) Configuring option files\n";
+
+$option_list = "$install_dir/installation/configure_list";
+
+if (! -f $option_list)
+{
+        die "\nOption file $option_list not exists.\n";
+}
+configure_file2($option_list,'bin');
+configure_file2($option_list,'example');
+
+print "#########  Configuring option files, done\n\n\n";
+
+system("chmod +x $install_dir/bin/*.sh");
+system("chmod +x $install_dir/example/*.sh");
+
+
+
+
+#### (2) Download basic tools
+print("\n#### (2) Download basic tools\n\n");
 
 chdir($tools_dir);
 $basic_tools_list = "scwrl4.tar.gz;TMscore.tar.gz;pulchra304.tar.gz";
