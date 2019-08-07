@@ -22,6 +22,6 @@ cd /data/jh7x3/CryoEMSeq/test/STIV_out
 
 source /data/jh7x3/CryoEMSeq/tools/python3_virtualenv/bin/activate
 
-printf "python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 40 /data/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /data/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV\n\n"
+printf "python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 40 /data/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /data/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV 10\n\n"
 
-python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 40 /data/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /data/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV
+python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 40 /data/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /data/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV 10
