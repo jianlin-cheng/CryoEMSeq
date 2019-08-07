@@ -14,7 +14,7 @@
 
 module load python/python-3.5.2
 
-outputdir=/data/jh7x3/CryoEMSeq/test/STIV_out
+outputdir=/storage/hpc/scratch/jh7x3/CryoEMSeq/test/STIV_out
 
 printf "Output directory: $outputdir\n\n"
 
@@ -29,11 +29,11 @@ mkdir -p $outputdir/
 cd $outputdir
 
 
-source /data/jh7x3/CryoEMSeq/tools/python3_virtualenv/bin/activate
+source /storage/hpc/scratch/jh7x3/CryoEMSeq/tools/python3_virtualenv/bin/activate
 
-printf "python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /data/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /data/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV\n\n"
+printf "python /storage/hpc/scratch/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /storage/hpc/scratch/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /storage/hpc/scratch/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV\n\n"
 
-python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /data/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /data/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV
+python /storage/hpc/scratch/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /storage/hpc/scratch/jh7x3/CryoEMSeq/example/STIV/STIV.fasta /storage/hpc/scratch/jh7x3/CryoEMSeq/example/STIV/STIV_Ca_Trace.pdb STIV
 
 
 

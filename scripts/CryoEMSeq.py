@@ -83,7 +83,7 @@ if __name__=="__main__":
     #### Step 2. Run Qprob on each Ca fragment
     for key, value in len_frag_filt.items():
         if not os.path.exists(main_folder+"/result/frag"+str(key)+".txt"):
-            os.system(script_path+"/P2_run_qprob_on_pdb_batch.pl "+frag_dir+"/frag"+str(key)+" "+tools_dir+" "+main_folder+"/result/frag"+str(key)+".txt")
+            os.system(script_path+"/P2_run_qprob_on_pdb_batch.pl "+frag_dir+"/frag"+str(key)+" "+tools_dir+" "+main_folder+"/result/frag"+str(key)+".txt"+" "+script_path)
             if os.path.exists(main_folder+"/result/frag"+str(key)+".txt"):
                 print("Step 2 Run Qprob on each Ca fragment "+str(key)+" finished ....")
             else:
