@@ -96,7 +96,7 @@ system("chmod +x $install_dir/example/*.sh");
 print("\n#### (2) Download basic tools\n\n");
 
 chdir($tools_dir);
-$basic_tools_list = "scwrl4.tar.gz;TMscore.tar.gz;pulchra304.tar.gz";
+$basic_tools_list = "scwrl4.tar.gz;TMscore.tar.gz;pulchra304.tar.gz;qprob_package.tar.gz";
 @basic_tools = split(';',$basic_tools_list);
 foreach $tool (@basic_tools)
 {

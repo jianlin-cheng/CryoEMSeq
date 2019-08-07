@@ -29,9 +29,9 @@ mkdir -p $outputdir/
 cd $outputdir
 
 
-printf "python /home/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.fasta /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.pdb TRPV1\n\n"
+printf "python /home/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.fasta /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1_Ca_Trace.pdb TRPV1\n\n"
 
-python /home/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.fasta /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.pdb TRPV1
+python /home/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py 10 /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1.fasta /home/jh7x3/CryoEMSeq/example/TRPV1/TRPV1_Ca_Trace.pdb TRPV1
 
 
 

@@ -2,31 +2,28 @@
 #--------------------------------------------------------------------------------
 #  SBATCH CONFIG
 #--------------------------------------------------------------------------------
-#SBATCH --job-name=cRN-wMSEli         # name for the job
-#SBATCH -o ResNet-wMSEli16-cullpdb-T1080-%j.out
-#SBATCH --partition gpu3
+#SBATCH -J  CryoEMSeq
+#SBATCH -o CryoEMSeq-%j.out
+#SBATCH --partition Lewis,hpc5,hpc4
 #SBATCH --nodes=1
-#SBATCH --ntasks=1         # leave at '1' unless using a MPI code
-#SBATCH --cpus-per-task=2  # cores per task
-#SBATCH --mem-per-cpu=20G  # memory per core (default is 1GB/core)
-#SBATCH --time 2-00:00     # days-hours:minutes
-#SBATCH --qos=normal
-#SBATCH --account=general-gpu  # investors will replace this with their account name
-#SBATCH --gres gpu:"GeForce GTX 1080 Ti":1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=10
+#SBATCH --mem-per-cpu=2G
+#SBATCH --time 2-00:00
 #--------------------------------------------------------------------------------
 
-#module load cuda/cuda-9.0.176
-#module load cudnn/cudnn-7.1.4-cuda-9.0.176
-#export GPUARRAY_FORCE_CUDA_DRIVER_LOAD=""
+module load python/python-3.5.2
 
 
-if [ $# != 2 ]; then
-	echo "$0 <path of features> <output-directory>"
+if [ $# != 4 ]; then
+	echo "$0 <path of fasta sequence> <path of Ca trace> <length threshold for fragment> <output-directory>"
 	exit
 fi
 
-path_options=$1
-outputdir=$2
+fasta_file=$1
+Ca_trace_file=$2
+threshold=$3
+outputdir=$4
 
 
 if [[ "$outputdir" != /* ]]
@@ -40,35 +37,28 @@ mkdir -p $outputdir/
 cd $outputdir
 
 
-source SOFTWARE_PATH/tools/python3_virtualenv/bin/activate
-export HDF5_USE_FILE_LOCKING='FALSE'
 
-
-path_options ='SOFTWARE_PATH/data/cullpdb_dataset/data_paths.txt'
-#module load R/R-3.3.1
-
-feature_dir=SOFTWARE_PATH/data
-output_dir=$outputdir
-acclog_dir=$outputdir
-
-if [ -f "$path_options" ]
+if [ -f "$fasta_file" ]
 then
-	printf "$path_options found.\n\n"
+	printf "Loading $fasta_file.\n\n"
 else
-	printf "$path_options not found.\n\n"
+	printf "$fasta_file not found.\n\n"
 	exit
 fi
 
 
-printf "python SOFTWARE_PATH/architecture/ResNet_arch/scripts/train_deepResNet_2D_gen_tune_cullpdb.py 150 64 6 'nadam' 3  100 1 $feature_dir $output_dir $acclog_dir 1 'he_normal' 'weighted_MSE_limited16' 1 $path_options\n\n"
-python SOFTWARE_PATH/architecture/ResNet_arch/scripts/train_deepResNet_2D_gen_tune_cullpdb.py 150 64 6 'nadam' 3  100 1 $feature_dir $output_dir $acclog_dir 1 'he_normal' 'weighted_MSE_limited16' 1 $path_options
+if [ -f "$Ca_trace_file" ]
+then
+	printf "Loading $Ca_trace_file.\n\n"
+else
+	printf "$Ca_trace_file not found.\n\n"
+	exit
+fi
 
 
-# binary_crossentropy
-# VarianceScaling
-# lecun_normal
-# he_normal
-# RandomUniform
 
-#"GeForce GTX 1080 Ti":1
-#Tesla K40m
+printf "python SOFTWARE_PATH/scripts/CryoEMSeq.py $threshold $fasta_file $Ca_trace_file $outputdir\n\n"
+
+python SOFTWARE_PATH/scripts/CryoEMSeq.py $threshold $fasta_file $Ca_trace_file $outputdir
+
+

@@ -3,4 +3,4 @@
 bin/run_CryoEMSeq.sh
 
 
-example/run_TRPV1.sh
+example/run_STIV.sh
