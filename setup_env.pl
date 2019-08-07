@@ -181,6 +181,27 @@ if(-d $addr_scwrl4)
 
 
 
+#### create python virtual environment on multicom server
+
+open(OUT,">$install_dir/installation/P1_setup_python3.sh") || die "Failed to open file $install_dir/installation/P1_setup_python3.sh\n";
+print OUT "#!/bin/bash -e\n\n";
+print OUT "scl enable rh-python36 bash\n\n";
+close OUT;
+
+
+open(OUT,">$install_dir/installation/P2_python3_virtual.sh") || die "Failed to open file $install_dir/installation/P2_python3_virtual.sh\n";
+print OUT "#!/bin/bash -e\n\n";
+print OUT "echo \" Start install python3 virtual environment (will take ~1 min)\"\n\n";
+print OUT "cd $install_dir/tools\n\n";
+print OUT "rm -rf python3_virtualenv\n\n";
+print OUT "pyvenv python3_virtualenv\n\n";
+print OUT "source $install_dir/tools/python3_virtualenv/bin/activate\n\n";
+print OUT "pip install --upgrade pip\n\n";
+print OUT "pip install numpy\n\n";
+print OUT "echo \"installed\" > $install_dir/tools/python3_virtualenv/install.done\n\n";
+close OUT;
+
+
 print "\n\n";
 
 

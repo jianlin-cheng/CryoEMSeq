@@ -56,6 +56,7 @@ else
 fi
 
 
+source /data/jh7x3/CryoEMSeq/tools/python3_virtualenv/bin/activate
 
 printf "python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py $threshold $fasta_file $Ca_trace_file $outputdir\n\n"
 
