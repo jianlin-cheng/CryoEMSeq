@@ -6,7 +6,7 @@ use File::Basename;
 
 
 $numArgs = @ARGV;
-if($numArgs != 4)
+if($numArgs != 3)
 {   
 	print "the number of parameters is not correct!\n";
 	exit(1);
@@ -17,7 +17,7 @@ $tool_dir	= "$ARGV[1]"; #/storage/htc/bdm/Collaboration/jh7x3/frag/tools
 $scoreout	= "$ARGV[2]"; #
 
 $script_dir = abs_path(dirname($0));
-$pulchar_program = "$tool_dir/pulchra304/pulchra";
+$pulchar_program = "$tool_dir/pulchra_306/pulchra";
 $scwrl4_program = "$tool_dir/scwrl4/Scwrl4";
 
 
