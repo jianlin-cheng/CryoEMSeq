@@ -28,7 +28,7 @@ sh run_CryoEMSeq.sh.sh  <path of fasta sequence> <path of Ca trace> <length thre
 
 ```
 
-**(5) Practice the examples**
+**(5) Practice the examples** 
 
 ```
 cd example
