@@ -2,7 +2,7 @@
 The program of mapping protein sequences into protein Ca trace drives from cryoEM image data
 
 
-**(1) Download DeepDist package (short path is recommended)**
+**(1) Download CryoEMSeq package (short path is recommended)**
 
 ```
 git clone https://github.com/jianlin-cheng/CryoEMSeq.git
@@ -24,7 +24,7 @@ sh P2_python3_virtual.sh
 **(4) Run CryoEMSeq (required)**
 
 ```
-sh run_CryoEMSeq.sh.sh  <path of fasta sequence> <path of Ca trace> <length threshold for fragment> <output-directory>
+sh run_CryoEMSeq.sh.sh  <path of fasta sequence> <path of Ca trace> <length threshold for fragment> <output-directory> <num of cpus>
 
 ```
 

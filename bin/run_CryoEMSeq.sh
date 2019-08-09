@@ -15,8 +15,8 @@
 module load python/python-3.5.2
 
 
-if [ $# != 4 ]; then
-	echo "$0 <path of fasta sequence> <path of Ca trace> <length threshold for fragment> <output-directory>"
+if [ $# != 5 ]; then
+	echo "$0 <path of fasta sequence> <path of Ca trace> <length threshold for fragment> <output-directory> <number of cpus>"
 	exit
 fi
 
@@ -24,9 +24,12 @@ fasta_file=$1
 Ca_trace_file=$2
 threshold=$3
 outputdir=$4
+cpu_num=$5
 
-source /storage/hpc/data/wuti/test/CryoEMSeq/tools/python3_virtualenv/bin/activate
+source /data/jh7x3/CryoEMSeq/tools/python3_virtualenv/bin/activate
 
-printf "python /storage/hpc/data/wuti/test/CryoEMSeq/scripts/CryoEMSeq.py $threshold $fasta_file $Ca_trace_file $outputdir\n\n"
+printf "python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py $threshold $fasta_file $Ca_trace_file $outputdir\n\n"
 
-python /storage/hpc/data/wuti/test/CryoEMSeq/scripts/CryoEMSeq.py $threshold $fasta_file $Ca_trace_file $outputdir
+python /data/jh7x3/CryoEMSeq/scripts/CryoEMSeq.py $threshold $fasta_file $Ca_trace_file $outputdir $cpu_num
+
+
