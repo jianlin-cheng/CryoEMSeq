@@ -116,7 +116,7 @@ if __name__=="__main__":
             arr = line.split()
             seg = arr[0]
             score = float(arr[1])
-            seg = re.sub("\.rebuilt.scwrl.pdb","",seg)
+            seg = re.sub("\.pdb","",seg)
             frag[seg] = score
         frag_sorted = sorted(frag.items(), key=lambda x: x[1], reverse=True)
         dict_frag_sorted = dict(frag_sorted)
@@ -136,7 +136,7 @@ if __name__=="__main__":
         if i+1 < len(frag_sorted):
             best.append(range(smin,smax))
             print(arr[0]+":"+str(smin)+"-"+str(smax))
-            os.system("cp "+main_folder+"/frag/"+arr[0]+"/"+arr[0]+"_"+str(smin)+"_qprob/models/"+arr[0]+"_"+str(smin)+".rebuilt.scwrl.pdb "+main_folder+"/best_model")
+            os.system("cp "+main_folder+"/frag/"+arr[0]+"/"+arr[0]+"_"+str(smin)+"_qprob/models/"+arr[0]+"_"+str(smin)+"_scwrl.pdb "+main_folder+"/best_model")
         else:
             print(arr[0]+" cannot find sequence")
         i = 0
