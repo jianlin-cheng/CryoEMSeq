@@ -13,9 +13,9 @@ import glob
 
 def reindex_pdb(pdb_folder,scriptpath):
    reres = "reindex_pdb.py"
-   for file in glob.glob(pdb_folder+"/*.rebuilt.scwrl.pdb"):
+   for file in glob.glob(pdb_folder+"/*_scwrl.pdb"):
         frag_seg = os.path.basename(file)
-        frag_seg = re.sub("\.rebuilt.scwrl.pdb","",frag_seg)
+        frag_seg = re.sub("\_scwrl.pdb","",frag_seg)
         arr = frag_seg.split('_')
         os.system("python "+scriptpath+"/"+reres+" "+arr[1]+" "+file+" "+pdb_folder+"/"+frag_seg+".pdb")
         os.system("rm -f "+file)
