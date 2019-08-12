@@ -46,6 +46,15 @@ def trace2frag(trace,frag_dir):
             flag = 1
             f.write(line+"\n")
             f.close()
+
+            #####reverse frag
+            f = open(frag_dir+"/frag"+str(i-1)+"_r.pdb","w")
+            for line in reversed(open(frag_dir+"/frag"+str(i-1)+".pdb").readlines()):
+                if line.startswith('\n') or line.startswith('TER') :
+                    continue
+                f.write(line)
+            f.write('TER\n')
+            f.close()
             len_frag[i-1] = j
             #print("frag"+str(i-1)+":"+str(j))
     return len_frag
@@ -55,10 +64,13 @@ def frag_filt(len_frag,thre,frag_dir):
     for key, value in len_frag.items():
         if value < int(thre):
             os.system("rm "+frag_dir+"/frag"+str(key)+".pdb")
+            os.system("rm "+frag_dir+"/frag"+str(key)+"_r.pdb")
         else:
             len_frag_filt[key] = value
             if not os.path.isdir(frag_dir+"/frag"+str(key)):
                 os.system("mkdir "+frag_dir+"/frag"+str(key))
+            if not os.path.isdir(frag_dir+"/frag"+str(key)+"_r"):
+                os.system("mkdir "+frag_dir+"/frag"+str(key)+"_r")
             #else:
                 #os.system("rm -rf "+frag_dir+"/frag"+str(key)+"/*")
     return len_frag_filt
@@ -95,3 +107,7 @@ def map2frag(seq,len_frag_filt,frag_dir):
         os.chdir(frag_dir+"/frag"+str(key))
         for i in range(0,L-value+1):
             single_map(seq[i:i+value], frag_dir+"/frag"+str(key)+".pdb",frag_dir+"/frag"+str(key)+"/frag"+str(key)+"_"+str(i+1)+".pdb")
+    for key, value in len_frag_filt.items():
+        os.chdir(frag_dir+"/frag"+str(key)+"_r")
+        for i in range(0,L-value+1):
+            single_map(seq[i:i+value], frag_dir+"/frag"+str(key)+"_r.pdb",frag_dir+"/frag"+str(key)+"_r/frag"+str(key)+"_"+str(i+1)+".pdb")

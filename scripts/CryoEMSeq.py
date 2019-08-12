@@ -92,6 +92,16 @@ if __name__=="__main__":
                 print("Step 2 Run Qprob on each Ca fragment "+str(key)+" failed!!!")
         else:
             print("Step 2 Run Qprob on each Ca fragment "+str(key)+" finished ....")
+        #####for reverse part, run qprob
+        if not os.path.exists(main_folder+"/result/frag"+str(key)+"_r.txt"):
+            print("perl " + script_path+"/P2_run_qprob_on_fragments_parallel.pl "+frag_dir+"/frag"+str(key)+"_r "+tools_dir+" "+main_folder+"/result/frag"+str(key)+"_r.txt" + " "+ str(cpus_num))
+            os.system("perl " + script_path+"/P2_run_qprob_on_fragments_parallel.pl "+frag_dir+"/frag"+str(key)+"_r "+tools_dir+" "+main_folder+"/result/frag"+str(key)+"_r.txt" + " "+ str(cpus_num))
+            if os.path.exists(main_folder+"/result/frag"+str(key)+".txt"):
+                print("Step 2 Run Qprob on each Ca fragment "+str(key)+" finished ....")
+            else:
+                print("Step 2 Run Qprob on each Ca fragment "+str(key)+" failed!!!")
+        else:
+            print("Step 2 Run Qprob on each Ca fragment "+str(key)+" finished ....")
 
     #### step3: Select best model based on Qprob score
     result_folder = main_folder+"/result"
@@ -111,13 +121,24 @@ if __name__=="__main__":
     smax = 0
     i = 0
     for key, value in dict_L.items():
-        for line in open(result_folder+"/"+key+".txt","r"):
-            line = line.rstrip()
-            arr = line.split()
-            seg = arr[0]
-            score = float(arr[1])
-            seg = re.sub("\.rebuilt.scwrl.pdb","",seg)
-            frag[seg] = score
+        with open(result_folder+"/"+key+".txt") as f1, open(result_folder+"/"+key+"_r.txt") as f2:
+            for x, y in zip(f1, f2):
+                x = x.rstrip()
+                arr = x.split()
+                seg = arr[0]
+                score = float(arr[1])
+                seg = re.sub("\.pdb","",seg)
+                
+                y = y.rstrip()
+                arr_reverse = y.split()
+                seg_reverse = arr_reverse[0]
+                score_reverse = float(arr_reverse[1])
+                seg_reverse = re.sub("\.pdb","",seg_reverse)+"_r"
+
+                if score > score_reverse:
+                    frag[seg] = score
+                else:
+                    frag[seg_reverse] = score_reverse
         frag_sorted = sorted(frag.items(), key=lambda x: x[1], reverse=True)
         dict_frag_sorted = dict(frag_sorted)
         max_frag = max(dict_frag_sorted, key=dict_frag_sorted.get)
@@ -136,7 +157,7 @@ if __name__=="__main__":
         if i+1 < len(frag_sorted):
             best.append(range(smin,smax))
             print(arr[0]+":"+str(smin)+"-"+str(smax))
-            os.system("cp "+main_folder+"/frag/"+arr[0]+"/"+arr[0]+"_"+str(smin)+"_qprob/models/"+arr[0]+"_"+str(smin)+".rebuilt.scwrl.pdb "+main_folder+"/best_model")
+            os.system("cp "+main_folder+"/frag/"+arr[0]+"/"+arr[0]+"_"+str(smin)+"_qprob/models/"+arr[0]+"_"+str(smin)+"_scwrl.pdb "+main_folder+"/best_model")
         else:
             print(arr[0]+" cannot find sequence")
         i = 0
