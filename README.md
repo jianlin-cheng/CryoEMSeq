@@ -14,7 +14,7 @@ cd CryoEMSeq
 **(2) Run CryoEMSeq (required)**
 
 ```
-sh run_CryoEMSeq.sh.sh  <path of fasta sequence> <path of Ca trace> <length threshold for fragment> <output-directory> <num of cpus>
+sh run_CryoEMSeq.sh  <path of fasta sequence> <path of Ca trace> <length threshold for fragment> <output-directory> <num of cpus>
 
 ```
 
