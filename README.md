@@ -11,14 +11,14 @@ git clone https://github.com/jianlin-cheng/CryoEMSeq.git
 cd CryoEMSeq
 ```
 
-**(3) Run CryoEMSeq (required)**
+**(2) Run CryoEMSeq (required)**
 
 ```
 sh run_CryoEMSeq.sh.sh  <path of fasta sequence> <path of Ca trace> <length threshold for fragment> <output-directory> <num of cpus>
 
 ```
 
-**(4) Practice the examples** 
+**(3) Practice the examples** 
 
 ```
 cd example
