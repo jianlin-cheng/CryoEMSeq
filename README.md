@@ -17,8 +17,7 @@ cd CryoEMSeq
 perl setup_env.pl
 
 cd installation
-sh P1_setup_python3.sh
-sh P2_python3_virtual.sh
+sh P1_python3_virtual.sh
 ```
 
 **(4) Run CryoEMSeq (required)**
