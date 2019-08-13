@@ -111,8 +111,8 @@ foreach $file (sort @files)
 		print RUNFILE "mkdir models\n"; 
 		print RUNFILE "cp $pdb_dir/${idname}_qprob/${idname}_scwrl.pdb models\n"; 
 		print RUNFILE "printf \"$tool_dir/qprob_package/bin/Qprob.sh $pdb_dir/${idname}_qprob/$idname.fasta   $pdb_dir/${idname}_qprob/models  $pdb_dir/${idname}_qprob/ &> $pdb_dir/${idname}_qprob/run.log\\n\\n\"\n";
-		#print RUNFILE "$tool_dir/qprob_package/bin/Qprob.sh $pdb_dir/${idname}_qprob/$idname.fasta   $pdb_dir/${idname}_qprob/models  $pdb_dir/${idname}_qprob/ &> $pdb_dir/${idname}_qprob/run.log\n\n";
-        print RUNFILE "/storage/htc/bdm/tools/qprob_package/bin/Qprob.sh $pdb_dir/${idname}_qprob/$idname.fasta   $pdb_dir/${idname}_qprob/models  $pdb_dir/${idname}_qprob/ &> $pdb_dir/${idname}_qprob/run.log\n\n";
+		print RUNFILE "$tool_dir/qprob_package/bin/Qprob.sh $pdb_dir/${idname}_qprob/$idname.fasta   $pdb_dir/${idname}_qprob/models  $pdb_dir/${idname}_qprob/ &> $pdb_dir/${idname}_qprob/run.log\n\n";
+        #print RUNFILE "/storage/htc/bdm/tools/qprob_package/bin/Qprob.sh $pdb_dir/${idname}_qprob/$idname.fasta   $pdb_dir/${idname}_qprob/models  $pdb_dir/${idname}_qprob/ &> $pdb_dir/${idname}_qprob/run.log\n\n";
 		print RUNFILE "mv $shell_dir/job_$shell_indx.running $shell_dir/job_$shell_indx.done";
 		close RUNFILE;
   }else{
