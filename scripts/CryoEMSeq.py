@@ -23,7 +23,12 @@ if __name__=="__main__":
 
     if len(sys.argv) != 6:
         sys.stderr.write(docstring)
-        exit()
+        sys.exit(1)
+
+    if sys.version_info[0] < 3:
+        print("Must be using Python 3!!!")
+        sys.exit(1)
+
 
     thre = sys.argv[1] #50 filter fragment that has length < thre
     fasta = sys.argv[2] #/storage/htc/bdm/tianqi/CryoEM/paper_revised/TMV/TMV.fasta
