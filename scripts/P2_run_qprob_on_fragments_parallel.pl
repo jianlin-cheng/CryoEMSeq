@@ -22,6 +22,7 @@ $script_dir = abs_path(dirname($0));
 $pulchar_program = "$tool_dir/pulchra_306/pulchra";
 $scwrl4_program = "$tool_dir/scwrl4/Scwrl4";
 
+$result_dir = abs_path(dirname($scoreout));
 
 if(!(-e $pulchar_program))
 {
@@ -80,10 +81,12 @@ foreach $file (sort @files)
   
   #### run pulchar on pdb file 
   #print "$pulchar_program $pdbfile\n";
+  $flag = 1;
   `$pulchar_program $pdbfile`;
   if(!(-e "$filepath/$idname.rebuilt.pdb"))
   {
-    die "The $filepath/$idname.rebuilt.pdb failed to be genearted\n";
+    $flag = 0;
+    system("echo \"The $filepath/$idname.rebuilt.pdb failed to be genearted\" >> $result_dir/error.txt");
   }
   
   #### run scwrl on pdb file 
@@ -92,32 +95,35 @@ foreach $file (sort @files)
   `$scwrl4_program -i $filepath/$idname.rebuilt.pdb -o $filepath/$idname.rebuilt.scwrl.pdb`;
   if(!(-e "$filepath/$idname.rebuilt.scwrl.pdb"))
   {
-    die "The $filepath/$idname.rebuilt.scwrl.pdb failed to be genearted\n";
+    $flag = 0;
+    system("echo \"The $filepath/$idname.rebuilt.scwrl.pdb failed to be genearted\" >> $result_dir/error.txt");
   }
   
   #### run qprob on pdb file 
-  if(!(-e "$pdb_dir/${idname}_qprob/$idname.Qprob_score"))
-  {
-		$shell_indx++;
-		open(RUNFILE,">$shell_dir/job_$shell_indx.sh") || die "Failed to write $shell_dir/job_$shell_indx.sh\n\n";
-		`touch $shell_dir/job_$shell_indx.queued`;
-		print RUNFILE "#!/bin/bash\n\n";
-		print RUNFILE "mv $shell_dir/job_$shell_indx.queued $shell_dir/job_$shell_indx.running\n\n";
-		print RUNFILE "mkdir $pdb_dir/${idname}_qprob\n";
-		print RUNFILE "cp $filepath/$idname.rebuilt.scwrl.pdb $filepath/${idname}_qprob/${idname}_scwrl.pdb\n"; 
-		print RUNFILE "cd $pdb_dir/${idname}_qprob\n";
-		print RUNFILE "perl $script_dir/pdb2fasta.pl $pdb_dir/${idname}_qprob/${idname}_scwrl.pdb $pdb_dir/${idname}_qprob/$idname $idname.fasta\n"; 
+  if($flag){
+      if(!(-e "$pdb_dir/${idname}_qprob/$idname.Qprob_score"))
+      {
+    		$shell_indx++;
+    		open(RUNFILE,">$shell_dir/job_$shell_indx.sh") || die "Failed to write $shell_dir/job_$shell_indx.sh\n\n";
+    		`touch $shell_dir/job_$shell_indx.queued`;
+    		print RUNFILE "#!/bin/bash\n\n";
+    		print RUNFILE "mv $shell_dir/job_$shell_indx.queued $shell_dir/job_$shell_indx.running\n\n";
+    		print RUNFILE "mkdir $pdb_dir/${idname}_qprob\n";
+    		print RUNFILE "cp $filepath/$idname.rebuilt.scwrl.pdb $filepath/${idname}_qprob/${idname}_scwrl.pdb\n"; 
+    		print RUNFILE "cd $pdb_dir/${idname}_qprob\n";
+    		print RUNFILE "perl $script_dir/pdb2fasta.pl $pdb_dir/${idname}_qprob/${idname}_scwrl.pdb $pdb_dir/${idname}_qprob/$idname $idname.fasta\n"; 
 
-		print RUNFILE "mkdir models\n"; 
-		print RUNFILE "cp $pdb_dir/${idname}_qprob/${idname}_scwrl.pdb models\n"; 
-		print RUNFILE "printf \"$tool_dir/qprob_package/bin/Qprob.sh $pdb_dir/${idname}_qprob/$idname.fasta   $pdb_dir/${idname}_qprob/models  $pdb_dir/${idname}_qprob/ &> $pdb_dir/${idname}_qprob/run.log\\n\\n\"\n";
-		print RUNFILE "$tool_dir/qprob_package/bin/Qprob.sh $pdb_dir/${idname}_qprob/$idname.fasta   $pdb_dir/${idname}_qprob/models  $pdb_dir/${idname}_qprob/ &> $pdb_dir/${idname}_qprob/run.log\n\n";
-        #print RUNFILE "/storage/htc/bdm/tools/qprob_package/bin/Qprob.sh $pdb_dir/${idname}_qprob/$idname.fasta   $pdb_dir/${idname}_qprob/models  $pdb_dir/${idname}_qprob/ &> $pdb_dir/${idname}_qprob/run.log\n\n";
-		print RUNFILE "mv $shell_dir/job_$shell_indx.running $shell_dir/job_$shell_indx.done";
-		close RUNFILE;
-  }else{
-	print "$pdb_dir/${idname}_qprob/$idname.Qprob_score already generated\n";
-  }
+    		print RUNFILE "mkdir models\n"; 
+    		print RUNFILE "cp $pdb_dir/${idname}_qprob/${idname}_scwrl.pdb models\n"; 
+    		print RUNFILE "printf \"$tool_dir/qprob_package/bin/Qprob.sh $pdb_dir/${idname}_qprob/$idname.fasta   $pdb_dir/${idname}_qprob/models  $pdb_dir/${idname}_qprob/ &> $pdb_dir/${idname}_qprob/run.log\\n\\n\"\n";
+    		print RUNFILE "$tool_dir/qprob_package/bin/Qprob.sh $pdb_dir/${idname}_qprob/$idname.fasta   $pdb_dir/${idname}_qprob/models  $pdb_dir/${idname}_qprob/ &> $pdb_dir/${idname}_qprob/run.log\n\n";
+            #print RUNFILE "/storage/htc/bdm/tools/qprob_package/bin/Qprob.sh $pdb_dir/${idname}_qprob/$idname.fasta   $pdb_dir/${idname}_qprob/models  $pdb_dir/${idname}_qprob/ &> $pdb_dir/${idname}_qprob/run.log\n\n";
+    		print RUNFILE "mv $shell_dir/job_$shell_indx.running $shell_dir/job_$shell_indx.done";
+    		close RUNFILE;
+      }else{
+    	print "$pdb_dir/${idname}_qprob/$idname.Qprob_score already generated\n";
+      }
+    }
 }
 
 
@@ -273,26 +279,31 @@ foreach $file (sort @files)
   }
   
 
-  if(!(-e "$pdb_dir/${idname}_qprob/$idname.Qprob_score"))
+  if(-e "$pdb_dir/${idname}_qprob/$idname.Qprob_score")
   {
-    die "The $pdb_dir/${idname}_qprob/$idname.Qprob_score failed to be genearted\n";
+      $qprob_score=10000;  #initialize
+      open(RWPLUS_CHECK, "$pdb_dir/${idname}_qprob/$idname.Qprob_score") || print "Can't open qprob output file.\n";
+      while(<RWPLUS_CHECK>)
+      {
+          $line = $_;
+          $line =~ s/\n//;
+        @tem_split=split(/\s+/,$line);
+        $qprob_score=$tem_split[1];
+      }
+      close RWPLUS_CHECK;
+      
+      print "qprob score of $idname: $qprob_score\n";
+      $pdb2dfire{$file} =  $qprob_score;
+      if(-e "$filepath/$idname.rebuilt.pdb"){
+            `rm $filepath/$idname.rebuilt.pdb`;
+      }
+      if(-e "$filepath/$idname.rebuilt.scwrl.pdb"){
+            `rm $filepath/$idname.rebuilt.scwrl.pdb`;
+      }
+  }else{
+    system("echo \"The $pdb_dir/${idname}_qprob/$idname.Qprob_score failed to be genearted\" >> $result_dir/error.txt");
   }
-  
-  $qprob_score=10000;  #initialize
-  open(RWPLUS_CHECK, "$pdb_dir/${idname}_qprob/$idname.Qprob_score") || print "Can't open qprob output file.\n";
-  while(<RWPLUS_CHECK>)
-  {
-      $line = $_;
-      $line =~ s/\n//;
-    @tem_split=split(/\s+/,$line);
-    $qprob_score=$tem_split[1];
-  }
-  close RWPLUS_CHECK;
-  
-  print "qprob score of $idname: $qprob_score\n";
-  $pdb2dfire{$file} =  $qprob_score;
-  `rm $filepath/$idname.rebuilt.pdb`;
-  `rm $filepath/$idname.rebuilt.scwrl.pdb`;
+
 }
 
 

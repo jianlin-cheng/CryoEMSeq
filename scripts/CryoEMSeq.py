@@ -45,6 +45,9 @@ if __name__=="__main__":
     frag_dir = main_folder+"/frag/"
     if not os.path.exists(main_folder+"/result"):
         os.system("mkdir -p "+main_folder+"/result")
+    else:
+        if os.path.exists(main_folder+"/result/error.txt"):
+            os.system("rm "+main_folder+"/result/error.txt")
 
     if not os.path.exists(main_folder+"/best_model"):
         os.system("mkdir -p "+main_folder+"/best_model")
@@ -126,6 +129,8 @@ if __name__=="__main__":
     smax = 0
     i = 0
     for key, value in dict_L.items():
+        if (os.path.getsize(result_folder+"/"+key+".txt")==0 and os.path.getsize(result_folder+"/"+key+"_r.txt")==0 ):
+            continue
         with open(result_folder+"/"+key+".txt") as f1, open(result_folder+"/"+key+"_r.txt") as f2:
             for x, y in zip(f1, f2):
                 x = x.rstrip()
@@ -151,7 +156,7 @@ if __name__=="__main__":
         smin = int(arr[1])
         smax = int(arr[1])+value-1
         while(best_overlap(smin,smax,best)):
-            if i+1 >= len(frag_sorted):
+            if i+1 > len(frag_sorted):
                 break
             max_frag_next = frag_sorted[i+1]
             max_frag = max_frag_next[0]
@@ -159,7 +164,7 @@ if __name__=="__main__":
             smin = int(arr[1])
             smax = int(arr[1])+value-1
             i = i+1
-        if i+1 < len(frag_sorted):
+        if i+1 <= len(frag_sorted):
             best.append(range(smin,smax))
             print(arr[0]+":"+str(smin)+"-"+str(smax))
             if 'r' in max_frag:
