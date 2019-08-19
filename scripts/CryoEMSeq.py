@@ -162,7 +162,7 @@ if __name__=="__main__":
         if i+1 < len(frag_sorted):
             best.append(range(smin,smax))
             print(arr[0]+":"+str(smin)+"-"+str(smax))
-            if 'r' in max_frag:
+            if '_r' in max_frag:
                 os.system("cp "+main_folder+"/frag/"+arr[0]+"_r/"+arr[0]+"_"+str(smin)+"_qprob/models/"+arr[0]+"_"+str(smin)+"_scwrl.pdb "+main_folder+"/best_model")
             else:
                 os.system("cp "+main_folder+"/frag/"+arr[0]+"/"+arr[0]+"_"+str(smin)+"_qprob/models/"+arr[0]+"_"+str(smin)+"_scwrl.pdb "+main_folder+"/best_model")
