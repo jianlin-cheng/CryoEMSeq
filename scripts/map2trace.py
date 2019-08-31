@@ -59,10 +59,23 @@ def trace2frag(trace,frag_dir):
             #print("frag"+str(i-1)+":"+str(j))
     return len_frag
 
-def frag_filt(len_frag,thre,frag_dir):
+def frag_filt(len_frag,max_len,thre,frag_dir):
     len_frag_filt = dict()
+    L = str(max_len)
     for key, value in len_frag.items():
-        if value < int(thre):
+        if value > int(L):
+            os.system("head -"+L+" "+frag_dir+"/frag"+str(key)+".pdb > "+frag_dir+"/frag"+str(key)+"_tmp.pdb")
+            os.system("rm "+frag_dir+"/frag"+str(key)+".pdb")
+            os.system("mv "+frag_dir+"/frag"+str(key)+"_tmp.pdb "+frag_dir+"/frag"+str(key)+".pdb")
+            os.system("head -"+L+" "+frag_dir+"/frag"+str(key)+"_r.pdb > "+frag_dir+"/frag"+str(key)+"_r_tmp.pdb")
+            os.system("rm "+frag_dir+"/frag"+str(key)+"_r.pdb")
+            os.system("mv "+frag_dir+"/frag"+str(key)+"_r_tmp.pdb "+frag_dir+"/frag"+str(key)+"_r.pdb")
+            if not os.path.isdir(frag_dir+"/frag"+str(key)):
+                os.system("mkdir "+frag_dir+"/frag"+str(key))
+            if not os.path.isdir(frag_dir+"/frag"+str(key)+"_r"):
+                os.system("mkdir "+frag_dir+"/frag"+str(key)+"_r")
+            len_frag_filt[key] = int(L)
+        elif value < int(thre):
             os.system("rm "+frag_dir+"/frag"+str(key)+".pdb")
             os.system("rm "+frag_dir+"/frag"+str(key)+"_r.pdb")
         else:

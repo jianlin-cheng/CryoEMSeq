@@ -76,7 +76,7 @@ if __name__=="__main__":
 
     #####save L.txt to result folder#####
     len_frag = trace2frag(trace,frag_dir)
-    len_frag_filt = frag_filt(len_frag,thre,frag_dir)
+    len_frag_filt = frag_filt(len_frag,L,thre,frag_dir)
     f = open(main_folder+"/result/"+"L.txt","w")
     for key, value in len_frag_filt.items():
         f.write("frag"+str(key)+" length "+str(value)+"\n")
@@ -180,4 +180,3 @@ if __name__=="__main__":
     reindex_pdb(main_folder+"/best_model",script_path)
     print("Step3: Select best model based on Qprob score finished...")
     sys.stdout.write('\ndone.\n')
-
